@@ -55,7 +55,7 @@ class OnboardingView extends GetView<OnboardingController> {
                 Obx(() => SmoothPageIndicator(
                       controller: controller.pageController,
                       count: controller.pages.length,
-                      effect: ExpandingDotsEffect(
+                      effect: const ExpandingDotsEffect(
                         activeDotColor: Colors.white,
                         dotColor: Colors.white38,
                         dotHeight: 8,
@@ -132,7 +132,7 @@ class _OnboardingPage extends StatelessWidget {
                 height: 180,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.15),
+                  color: Colors.white.withValues(alpha: 0.15),
                 ),
                 child: Center(
                   child: Text(
@@ -177,7 +177,7 @@ class _OnboardingPage extends StatelessWidget {
                   fontFamily: 'Poppins',
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
-                  color: Colors.white.withOpacity(0.85),
+                  color: Colors.white.withValues(alpha: 0.85),
                   height: 1.6,
                 ),
               )

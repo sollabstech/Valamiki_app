@@ -59,7 +59,7 @@ class RegisterView extends GetView<RegisterController> {
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 14,
-                          color: Colors.white.withOpacity(0.85),
+                          color: Colors.white.withValues(alpha: 0.85),
                         ),
                       ).animate().fadeIn(delay: 200.ms),
                     ],
@@ -140,7 +140,7 @@ class _RegisterFormStep extends StatelessWidget {
                   children: [
                     const Text('🇮🇳', style: TextStyle(fontSize: 18)),
                     const SizedBox(width: 6),
-                    Text(
+                    const Text(
                       '+91',
                       style: TextStyle(
                         fontFamily: 'Poppins',
@@ -154,8 +154,8 @@ class _RegisterFormStep extends StatelessWidget {
                   ],
                 ),
               ),
-              labelStyle: TextStyle(fontFamily: 'Poppins', color: AppColors.textSecondary),
-              hintStyle: TextStyle(fontFamily: 'Poppins', color: AppColors.textSecondary.withOpacity(0.5)),
+              labelStyle: const TextStyle(fontFamily: 'Poppins', color: AppColors.textSecondary),
+              hintStyle: TextStyle(fontFamily: 'Poppins', color: AppColors.textSecondary.withValues(alpha: 0.5)),
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
@@ -195,7 +195,7 @@ class _RegisterFormStep extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Already have an account? ',
                 style: TextStyle(
                   fontFamily: 'Poppins',
@@ -247,7 +247,7 @@ class _RegisterOtpStep extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: Colors.grey.shade200, width: 1.5),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 8, offset: const Offset(0, 2)),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
         ],
       ),
     );
@@ -271,7 +271,7 @@ class _RegisterOtpStep extends StatelessWidget {
 
         Obx(() => RichText(
               text: TextSpan(
-                style: TextStyle(fontFamily: 'Poppins', fontSize: 13, color: AppColors.textSecondary),
+                style: const TextStyle(fontFamily: 'Poppins', fontSize: 13, color: AppColors.textSecondary),
                 children: [
                   const TextSpan(text: 'OTP sent to '),
                   TextSpan(
@@ -315,7 +315,7 @@ class _RegisterOtpStep extends StatelessWidget {
             ),
             submittedPinTheme: defaultPinTheme.copyWith(
               decoration: defaultPinTheme.decoration!.copyWith(
-                color: AppColors.primary.withOpacity(0.08),
+                color: AppColors.primary.withValues(alpha: 0.08),
                 border: Border.all(color: AppColors.primary, width: 1.5),
               ),
             ),
@@ -339,7 +339,7 @@ class _RegisterOtpStep extends StatelessWidget {
             if (controller.resendSeconds.value > 0) {
               return Text(
                 'Resend OTP in ${controller.resendSeconds.value}s',
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 13,
                   color: AppColors.textSecondary,

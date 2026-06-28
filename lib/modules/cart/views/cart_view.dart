@@ -75,7 +75,7 @@ class CartView extends GetView<CartController> {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.08),
+              color: AppColors.primary.withValues(alpha: 0.08),
               shape: BoxShape.circle,
             ),
             child: const Icon(Icons.shopping_cart_outlined, size: 56, color: AppColors.primary),
@@ -91,7 +91,7 @@ class CartView extends GetView<CartController> {
             ),
           ).animate().fadeIn(delay: 200.ms),
           const SizedBox(height: 8),
-          Text(
+          const Text(
             'Add items to get started',
             style: TextStyle(
               fontFamily: 'Poppins',
@@ -117,7 +117,7 @@ class CartView extends GetView<CartController> {
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, -4),
           ),
@@ -189,7 +189,7 @@ class _CartItemTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -304,7 +304,7 @@ class _QtyButton extends StatelessWidget {
         width: 32,
         height: 32,
         decoration: BoxDecoration(
-          color: AppColors.primary.withOpacity(0.1),
+          color: AppColors.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(icon, size: 16, color: AppColors.primary),

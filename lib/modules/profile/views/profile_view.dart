@@ -42,7 +42,7 @@ class ProfileView extends StatelessWidget {
                         height: 72,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(0.25),
+                          color: Colors.white.withValues(alpha: 0.25),
                           border: Border.all(color: Colors.white, width: 2),
                         ),
                         child: Center(
@@ -79,7 +79,7 @@ class ProfileView extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 13,
-                                color: Colors.white.withOpacity(0.85),
+                                color: Colors.white.withValues(alpha: 0.85),
                               ),
                             ),
                           ],
@@ -90,7 +90,7 @@ class ProfileView extends StatelessWidget {
                         icon: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Icon(Icons.edit_outlined, color: Colors.white, size: 18),
@@ -157,7 +157,7 @@ class ProfileView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 32),
-                Center(
+                const Center(
                   child: Text(
                     'VALAMIKI v1.0.0',
                     style: TextStyle(
@@ -207,7 +207,7 @@ class _MenuSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(18),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 3),
               ),
@@ -263,7 +263,7 @@ class _MenuItem extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: (iconColor ?? AppColors.primary).withOpacity(0.1),
+          color: (iconColor ?? AppColors.primary).withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Icon(

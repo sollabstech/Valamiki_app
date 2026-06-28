@@ -35,7 +35,7 @@ class AddressesView extends GetView<ProfileController> {
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.08),
+                      color: AppColors.primary.withValues(alpha: 0.08),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(Icons.location_off_outlined, size: 48, color: AppColors.primary),
@@ -111,7 +111,7 @@ class _AddressCard extends StatelessWidget {
             : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -123,7 +123,7 @@ class _AddressCard extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(_typeIcon, color: AppColors.primary, size: 22),

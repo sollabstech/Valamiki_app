@@ -102,6 +102,7 @@ class HomeController extends GetxController {
 
   void changeTab(int index) => currentIndex.value = index;
 
+  @override
   Future<void> refresh() => loadInitialData();
 
   String get greeting {

@@ -31,7 +31,7 @@ class OrderConfirmationView extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.success.withOpacity(0.4),
+                      color: AppColors.success.withValues(alpha: 0.4),
                       blurRadius: 30,
                       offset: const Offset(0, 12),
                     ),
@@ -65,7 +65,7 @@ class OrderConfirmationView extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              Text(
+              const Text(
                 'Your order has been placed successfully.\nWe\'ll deliver it to your door!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -87,7 +87,7 @@ class OrderConfirmationView extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.06),
+                      color: Colors.black.withValues(alpha: 0.06),
                       blurRadius: 16,
                       offset: const Offset(0, 4),
                     ),
@@ -99,9 +99,9 @@ class OrderConfirmationView extends StatelessWidget {
                     const Divider(height: 20),
                     _InfoRow(label: 'Total Amount', value: AppHelpers.formatCurrency(total)),
                     const Divider(height: 20),
-                    _InfoRow(label: 'Payment', value: 'Cash on Delivery'),
+                    const _InfoRow(label: 'Payment', value: 'Cash on Delivery'),
                     const Divider(height: 20),
-                    _InfoRow(label: 'Status', value: 'Confirmed', valueColor: AppColors.success),
+                    const _InfoRow(label: 'Status', value: 'Confirmed', valueColor: AppColors.success),
                   ],
                 ),
               ).animate().fadeIn(delay: 600.ms).slideY(begin: 0.3, end: 0, delay: 600.ms),

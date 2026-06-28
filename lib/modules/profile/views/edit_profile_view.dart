@@ -34,7 +34,7 @@ class EditProfileView extends GetView<ProfileController> {
                     Obx(() => Container(
                           width: 100,
                           height: 100,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             gradient: AppColors.primaryGradient,
                             shape: BoxShape.circle,
                           ),

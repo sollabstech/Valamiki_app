@@ -28,7 +28,7 @@ class ForgotPasswordView extends StatelessWidget {
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(18),
               ),
               child: const Icon(Icons.phone_android_rounded, color: AppColors.primary, size: 32),
@@ -44,7 +44,7 @@ class ForgotPasswordView extends StatelessWidget {
               ),
             ).animate().fadeIn(delay: 200.ms),
             const SizedBox(height: 12),
-            Text(
+            const Text(
               'VALAMIKI uses mobile OTP login — just enter your registered mobile number on the Sign In screen and we\'ll send a fresh OTP.',
               style: TextStyle(
                 fontFamily: 'Poppins',

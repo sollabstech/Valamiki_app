@@ -37,7 +37,7 @@ class CategoryModel {
       'name': name,
       'imageUrl': imageUrl,
       'icon': icon,
-      'color': color.value,
+      'color': color.toARGB32(),
       'productCount': productCount,
       'isActive': isActive,
     };

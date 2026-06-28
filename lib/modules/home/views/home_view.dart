@@ -49,7 +49,7 @@ class _BottomNav extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, -4),
           ),
@@ -95,7 +95,7 @@ class _BottomNav extends StatelessWidget {
                               child: Container(
                                 width: 14,
                                 height: 14,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: AppColors.error,
                                   shape: BoxShape.circle,
                                 ),
@@ -187,7 +187,7 @@ class _HomeTab extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 13,
-                        color: Colors.white.withOpacity(0.85),
+                        color: Colors.white.withValues(alpha: 0.85),
                       ),
                     ),
                     Text(
@@ -208,7 +208,7 @@ class _HomeTab extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 12,
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white.withValues(alpha: 0.8),
                           ),
                         ),
                       ],
@@ -228,7 +228,7 @@ class _HomeTab extends StatelessWidget {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Icon(Icons.shopping_cart_outlined, color: Colors.white, size: 22),
@@ -278,7 +278,7 @@ class _HomeTab extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.06),
+                color: Colors.black.withValues(alpha: 0.06),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -288,7 +288,7 @@ class _HomeTab extends StatelessWidget {
             children: [
               const Icon(Icons.search_rounded, color: AppColors.textSecondary, size: 22),
               const SizedBox(width: 12),
-              Text(
+              const Text(
                 'Search groceries, stationery...',
                 style: TextStyle(
                   fontFamily: 'Poppins',
@@ -300,7 +300,7 @@ class _HomeTab extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.08),
+                  color: AppColors.primary.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Text(
@@ -348,7 +348,7 @@ class _HomeTab extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Color(banner.color1).withOpacity(0.4),
+                  color: Color(banner.color1).withValues(alpha: 0.4),
                   blurRadius: 16,
                   offset: const Offset(0, 6),
                 ),
@@ -365,7 +365,7 @@ class _HomeTab extends StatelessWidget {
                     height: 120,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                     ),
                   ),
                 ),
@@ -377,7 +377,7 @@ class _HomeTab extends StatelessWidget {
                     height: 80,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white.withOpacity(0.08),
+                      color: Colors.white.withValues(alpha: 0.08),
                     ),
                   ),
                 ),
@@ -396,7 +396,7 @@ class _HomeTab extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 12,
-                                color: Colors.white.withOpacity(0.85),
+                                color: Colors.white.withValues(alpha: 0.85),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -560,8 +560,8 @@ class _HomeTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(20, 20, 20, 12),
           child: ShimmerWidget.rectangular(height: 20, width: 160),
         ),
         SizedBox(
@@ -570,8 +570,8 @@ class _HomeTab extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             itemCount: 4,
-            itemBuilder: (_, __) => Padding(
-              padding: const EdgeInsets.only(right: 12),
+            itemBuilder: (_, __) => const Padding(
+              padding: EdgeInsets.only(right: 12),
               child: ShimmerWidget.rectangular(
                 height: 210,
                 width: 160,
@@ -634,7 +634,7 @@ class _SectionHeader extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.08),
+                  color: AppColors.primary.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Text(
@@ -676,10 +676,10 @@ class _CategoryChip extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                color: category.color.withOpacity(0.12),
+                color: category.color.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(18),
                 border: Border.all(
-                  color: category.color.withOpacity(0.3),
+                  color: category.color.withValues(alpha: 0.3),
                   width: 1.5,
                 ),
               ),

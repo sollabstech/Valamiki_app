@@ -27,7 +27,7 @@ class SplashView extends GetView<SplashController> {
                 height: 300,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.06),
+                  color: Colors.white.withValues(alpha: 0.06),
                 ),
               ).animate().scale(
                     begin: const Offset(0, 0),
@@ -44,7 +44,7 @@ class SplashView extends GetView<SplashController> {
                 height: 350,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 0.05),
                 ),
               ).animate().scale(
                     begin: const Offset(0, 0),
@@ -68,7 +68,7 @@ class SplashView extends GetView<SplashController> {
                       borderRadius: BorderRadius.circular(28),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
+                          color: Colors.black.withValues(alpha: 0.25),
                           blurRadius: 30,
                           offset: const Offset(0, 12),
                         ),
@@ -121,7 +121,7 @@ class SplashView extends GetView<SplashController> {
                       fontFamily: 'Poppins',
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withValues(alpha: 0.8),
                       letterSpacing: 0.5,
                     ),
                   )
@@ -143,7 +143,7 @@ class SplashView extends GetView<SplashController> {
                     width: 40,
                     height: 40,
                     child: CircularProgressIndicator(
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withValues(alpha: 0.8),
                       strokeWidth: 2.5,
                     ),
                   ).animate().fadeIn(delay: 1000.ms, duration: 500.ms),
@@ -153,7 +153,7 @@ class SplashView extends GetView<SplashController> {
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 12,
-                      color: Colors.white.withOpacity(0.6),
+                      color: Colors.white.withValues(alpha: 0.6),
                     ),
                   ).animate().fadeIn(delay: 1200.ms, duration: 500.ms),
                 ],

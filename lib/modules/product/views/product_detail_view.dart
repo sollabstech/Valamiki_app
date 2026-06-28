@@ -3,7 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import '../controllers/product_controller.dart';
-import '../../cart/controllers/cart_controller.dart';
 import '../../../core/constants/color_constants.dart';
 import '../../../core/utils/helpers.dart';
 import '../../../routes/app_routes.dart';
@@ -82,7 +81,7 @@ class ProductDetailView extends GetView<ProductController> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.1),
+                          color: AppColors.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -352,7 +351,7 @@ class _QtyBtn extends StatelessWidget {
         width: 38,
         height: 42,
         decoration: BoxDecoration(
-          color: AppColors.primary.withOpacity(0.08),
+          color: AppColors.primary.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Icon(icon, size: 18, color: AppColors.primary),

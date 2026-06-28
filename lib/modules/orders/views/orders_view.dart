@@ -90,7 +90,7 @@ class _EmptyOrders extends StatelessWidget {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.08),
+              color: AppColors.primary.withValues(alpha: 0.08),
               shape: BoxShape.circle,
             ),
             child: const Icon(Icons.receipt_long_outlined, size: 56, color: AppColors.primary),
@@ -106,7 +106,7 @@ class _EmptyOrders extends StatelessWidget {
             ),
           ).animate().fadeIn(delay: 200.ms),
           const SizedBox(height: 8),
-          Text(
+          const Text(
             'Start shopping to see your orders here',
             style: TextStyle(
               fontFamily: 'Poppins',
@@ -153,7 +153,7 @@ class _OrderCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -177,7 +177,7 @@ class _OrderCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _statusColor.withOpacity(0.1),
+                    color: _statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(

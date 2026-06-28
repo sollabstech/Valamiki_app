@@ -147,7 +147,7 @@ class AppTheme {
       ),
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.surfaceVariant,
-        selectedColor: AppColors.primary.withOpacity(0.15),
+        selectedColor: AppColors.primary.withValues(alpha: 0.15),
         labelStyle: const TextStyle(
           fontFamily: 'Poppins',
           fontSize: 13,

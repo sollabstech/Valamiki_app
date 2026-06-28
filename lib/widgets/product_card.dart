@@ -43,7 +43,7 @@ class ProductCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(18),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.06),
+                  color: Colors.black.withValues(alpha: 0.06),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -58,9 +58,9 @@ class ProductCard extends StatelessWidget {
                     Container(
                       height: isGrid ? 130 : 120,
                       width: double.infinity,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: AppColors.surfaceVariant,
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
                       ),
                       child: const Center(
                         child: Icon(Icons.image_outlined, size: 40, color: AppColors.textHint),
@@ -97,7 +97,7 @@ class ProductCard extends StatelessWidget {
                         right: 8,
                         child: Container(
                           padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: AppColors.accentOrange,
                             shape: BoxShape.circle,
                           ),
@@ -168,7 +168,7 @@ class ProductCard extends StatelessWidget {
                             if (qty > 0) {
                               return Container(
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.08),
+                                  color: AppColors.primary.withValues(alpha: 0.08),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Row(
@@ -180,7 +180,7 @@ class ProductCard extends StatelessWidget {
                                         width: 26,
                                         height: 26,
                                         decoration: BoxDecoration(
-                                          color: AppColors.primary.withOpacity(0.15),
+                                          color: AppColors.primary.withValues(alpha: 0.15),
                                           borderRadius: BorderRadius.circular(7),
                                         ),
                                         child: const Icon(Icons.remove, size: 14, color: AppColors.primary),

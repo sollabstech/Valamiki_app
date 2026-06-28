@@ -40,7 +40,7 @@ class CategoryProductsView extends GetView<CategoriesController> {
                     end: Alignment.bottomRight,
                     colors: [
                       category?.color ?? AppColors.primary,
-                      (category?.color ?? AppColors.primary).withOpacity(0.7),
+                      (category?.color ?? AppColors.primary).withValues(alpha: 0.7),
                     ],
                   ),
                 ),
@@ -58,7 +58,7 @@ class CategoryProductsView extends GetView<CategoriesController> {
                   padding: const EdgeInsets.all(16),
                   sliver: SliverGrid(
                     delegate: SliverChildBuilderDelegate(
-                      (_, __) => ShimmerWidget.rectangular(
+                      (_, __) => const ShimmerWidget.rectangular(
                         height: 200,
                         borderRadius: 16,
                       ),

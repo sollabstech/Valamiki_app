@@ -35,5 +35,6 @@ class OrdersController extends GetxController {
     selectedOrder.value = order;
   }
 
+  @override
   Future<void> refresh() => loadOrders();
 }

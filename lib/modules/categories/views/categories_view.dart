@@ -94,7 +94,7 @@ class _CategoryCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: category.color.withOpacity(0.15),
+              color: category.color.withValues(alpha: 0.15),
               blurRadius: 16,
               offset: const Offset(0, 6),
             ),
@@ -111,7 +111,7 @@ class _CategoryCard extends StatelessWidget {
                 height: 90,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: category.color.withOpacity(0.1),
+                  color: category.color.withValues(alpha: 0.1),
                 ),
               ),
             ),
@@ -125,7 +125,7 @@ class _CategoryCard extends StatelessWidget {
                     width: 52,
                     height: 52,
                     decoration: BoxDecoration(
-                      color: category.color.withOpacity(0.12),
+                      color: category.color.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Center(
@@ -146,7 +146,7 @@ class _CategoryCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: category.color.withOpacity(0.1),
+                      color: category.color.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(

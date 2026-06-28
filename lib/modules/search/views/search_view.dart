@@ -83,12 +83,12 @@ class _RecentSearches extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => controller.recentSearches.isEmpty
-        ? Center(
+        ? const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.search_rounded, size: 64, color: AppColors.textHint),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Text(
                   'Search for products',
                   style: TextStyle(
@@ -127,7 +127,7 @@ class _RecentSearches extends StatelessWidget {
                         ),
                       ),
                       onTap: () => controller.useRecent(entry.value),
-                    ).animate().fadeIn(delay: Duration(milliseconds: 60 * (entry.key as int))),
+                    ).animate().fadeIn(delay: Duration(milliseconds: 60 * (entry.key))),
                   ),
             ],
           ));
@@ -137,13 +137,13 @@ class _RecentSearches extends StatelessWidget {
 class _EmptyResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.search_off_rounded, size: 64, color: AppColors.textHint),
-          const SizedBox(height: 16),
-          const Text(
+          SizedBox(height: 16),
+          Text(
             'No products found',
             style: TextStyle(
               fontFamily: 'Poppins',
@@ -152,7 +152,7 @@ class _EmptyResults extends StatelessWidget {
               color: AppColors.textPrimary,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             'Try a different search term',
             style: TextStyle(
