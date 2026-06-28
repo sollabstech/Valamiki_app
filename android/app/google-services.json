@@ -1,34 +1,37 @@
 {
-  "_INSTRUCTION": "Replace this file with your actual google-services.json from Firebase Console",
-  "_STEPS": [
-    "1. Go to https://console.firebase.google.com/",
-    "2. Create a new project named 'Valamiki'",
-    "3. Add an Android app with package name: com.valamiki.valamiki_app",
-    "4. Download google-services.json and replace this file",
-    "5. Enable: Authentication (Email/Password), Firestore, Storage"
-  ],
   "project_info": {
-    "project_number": "000000000000",
-    "project_id": "valamiki-app",
-    "storage_bucket": "valamiki-app.appspot.com"
+    "project_number": "603268214018",
+    "firebase_url": "https://valamiki-default-rtdb.firebaseio.com",
+    "project_id": "valamiki",
+    "storage_bucket": "valamiki.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+        "mobilesdk_app_id": "1:603268214018:android:c737bb1b222944efd5261b",
         "android_client_info": {
           "package_name": "com.valamiki.valamiki_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "603268214018-94jlg2i4q9jcvfmt08bvk0v13frin0i3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "YOUR_API_KEY_HERE"
+          "current_key": "AIzaSyA7VIxkZYoHqj2gT4GwdaPdHZmn4Q37c9w"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603268214018-94jlg2i4q9jcvfmt08bvk0v13frin0i3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
