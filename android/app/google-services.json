@@ -1,0 +1,37 @@
+{
+  "_INSTRUCTION": "Replace this file with your actual google-services.json from Firebase Console",
+  "_STEPS": [
+    "1. Go to https://console.firebase.google.com/",
+    "2. Create a new project named 'Valamiki'",
+    "3. Add an Android app with package name: com.valamiki.valamiki_app",
+    "4. Download google-services.json and replace this file",
+    "5. Enable: Authentication (Email/Password), Firestore, Storage"
+  ],
+  "project_info": {
+    "project_number": "000000000000",
+    "project_id": "valamiki-app",
+    "storage_bucket": "valamiki-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+        "android_client_info": {
+          "package_name": "com.valamiki.valamiki_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "YOUR_API_KEY_HERE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

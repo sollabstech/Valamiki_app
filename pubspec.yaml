@@ -1,0 +1,84 @@
+name: valamiki_app
+description: VALAMIKI - Premium Stationery & Grocery Ecommerce App
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management + Routing + DI
+  get: ^4.6.6
+
+  # Firebase
+  firebase_core: ^2.27.1
+  firebase_auth: ^4.17.9
+  cloud_firestore: ^4.15.9
+  firebase_storage: ^11.6.10
+
+  # UI & Animations
+  flutter_animate: ^4.5.0
+  lottie: ^3.1.0
+  carousel_slider: ^4.2.1
+  shimmer: ^3.0.0
+  cached_network_image: ^3.3.1
+
+  # Responsive
+  flutter_screenutil: ^5.9.0
+
+  # Storage
+  shared_preferences: ^2.2.3
+
+  # Utils
+  intl: ^0.19.0
+
+  # Icons
+  cupertino_icons: ^1.0.6
+  flutter_svg: ^2.0.10+1
+
+  # Image Picker
+  image_picker: ^1.0.7
+
+  # Url Launcher
+  url_launcher: ^6.2.6
+
+  # Smooth page indicator
+  smooth_page_indicator: ^1.1.0
+
+  # Timeline Tile (Orders)
+  timeline_tile: ^2.0.0
+
+  # Rating
+  flutter_rating_bar: ^4.0.1
+
+  # Pinput (OTP)
+  pinput: ^4.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/lottie/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins-Light.ttf
+          weight: 300
