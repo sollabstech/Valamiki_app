@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../core/services/firebase_service.dart';
 import '../../core/services/storage_service.dart';
 import '../../core/constants/app_constants.dart';
@@ -7,47 +8,52 @@ class AuthRepository {
   final _firebase = FirebaseService.instance;
   final _storage = StorageService.instance;
 
-  Future<UserModel> signUp({
-    required String name,
-    required String email,
-    required String password,
+  /// Step 1 — send OTP to the phone number (auto-prepends +91)
+  Future<void> sendOTP({
+    required String phone,
+    required void Function(String verificationId) onCodeSent,
+    required void Function(String error) onError,
+    required void Function() onAutoVerified,
   }) async {
-    final credential = await _firebase.auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
+    await _firebase.auth.verifyPhoneNumber(
+      phoneNumber: '+91$phone',
+      timeout: const Duration(seconds: 60),
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        // Auto-verified on Android (SMS auto-read)
+        await _firebase.auth.signInWithCredential(credential);
+        onAutoVerified();
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        onError(e.message ?? 'Verification failed');
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        onCodeSent(verificationId);
+      },
+      codeAutoRetrievalTimeout: (_) {},
     );
-
-    final user = credential.user!;
-    await user.updateDisplayName(name);
-
-    final userModel = UserModel(
-      uid: user.uid,
-      name: name,
-      email: email,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-
-    await _firebase.firestore
-        .collection(AppConstants.colUsers)
-        .doc(user.uid)
-        .set(userModel.toMap());
-
-    await _storage.saveLoginSession(user.uid, email);
-    return userModel;
   }
 
-  Future<UserModel> signIn({
-    required String email,
-    required String password,
-    bool rememberMe = false,
+  /// Step 2 — verify the 6-digit OTP and return the user
+  Future<UserModel> verifyOTP({
+    required String verificationId,
+    required String otp,
+    String name = '',
   }) async {
-    final credential = await _firebase.auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
+    final credential = PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: otp,
     );
+    final uc = await _firebase.auth.signInWithCredential(credential);
+    return _handleUserCredential(uc, name: name);
+  }
 
-    final user = credential.user!;
+  Future<UserModel> _handleUserCredential(
+    UserCredential uc, {
+    String name = '',
+  }) async {
+    final user = uc.user!;
+    final phone = user.phoneNumber?.replaceFirst('+91', '') ?? '';
+
     final doc = await _firebase.firestore
         .collection(AppConstants.colUsers)
         .doc(user.uid)
@@ -59,8 +65,9 @@ class AuthRepository {
     } else {
       userModel = UserModel(
         uid: user.uid,
-        name: user.displayName ?? '',
-        email: email,
+        name: name.isNotEmpty ? name : 'User',
+        email: '',
+        phone: phone,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
@@ -70,9 +77,7 @@ class AuthRepository {
           .set(userModel.toMap());
     }
 
-    await _storage.saveLoginSession(user.uid, email);
-    if (rememberMe) await _storage.setBool(AppConstants.keyRememberMe, true);
-
+    await _storage.saveLoginSession(user.uid, phone);
     return userModel;
   }
 
@@ -81,19 +86,13 @@ class AuthRepository {
     await _storage.clearLoginSession();
   }
 
-  Future<void> resetPassword(String email) async {
-    await _firebase.auth.sendPasswordResetEmail(email: email);
-  }
-
   Future<UserModel?> getCurrentUser() async {
     final user = _firebase.currentUser;
     if (user == null) return null;
-
     final doc = await _firebase.firestore
         .collection(AppConstants.colUsers)
         .doc(user.uid)
         .get();
-
     if (!doc.exists) return null;
     return UserModel.fromMap(doc.data()!, user.uid);
   }

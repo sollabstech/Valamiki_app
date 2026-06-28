@@ -35,18 +35,20 @@ class StorageService extends GetxService {
   bool get isFirstLaunch => getBool(AppConstants.keyIsFirstLaunch, defaultValue: true);
   bool get rememberMe => getBool(AppConstants.keyRememberMe);
   String get userId => getString(AppConstants.keyUserId);
+  String get userPhone => getString(AppConstants.keyUserPhone);
+  // kept for backward compat, not used with phone auth
   String get userEmail => getString(AppConstants.keyUserEmail);
 
-  Future<void> saveLoginSession(String userId, String email) async {
+  Future<void> saveLoginSession(String userId, String phone) async {
     await setBool(AppConstants.keyIsLoggedIn, true);
     await setString(AppConstants.keyUserId, userId);
-    await setString(AppConstants.keyUserEmail, email);
+    await setString(AppConstants.keyUserPhone, phone);
   }
 
   Future<void> clearLoginSession() async {
     await setBool(AppConstants.keyIsLoggedIn, false);
     await remove(AppConstants.keyUserId);
-    await remove(AppConstants.keyUserEmail);
+    await remove(AppConstants.keyUserPhone);
   }
 
   Future<void> setFirstLaunchComplete() async {

@@ -9,6 +9,7 @@ class AppConstants {
   static const String keyIsLoggedIn = 'is_logged_in';
   static const String keyUserId = 'user_id';
   static const String keyUserEmail = 'user_email';
+  static const String keyUserPhone = 'user_phone';
   static const String keyRememberMe = 'remember_me';
   static const String keyCartItems = 'cart_items';
   static const String keyThemeMode = 'theme_mode';
