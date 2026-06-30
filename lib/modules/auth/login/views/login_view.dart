@@ -47,16 +47,10 @@ class LoginView extends GetView<LoginController> {
                           ),
                         ],
                       ),
-                      child: const Center(
-                        child: Text(
-                          'V',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 38,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.primary,
-                          ),
-                        ),
+                      padding: const EdgeInsets.all(12),
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        fit: BoxFit.contain,
                       ),
                     )
                         .animate()
