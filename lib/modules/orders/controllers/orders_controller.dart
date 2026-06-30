@@ -1,40 +1,63 @@
+import 'dart:async';
 import 'package:get/get.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../../core/services/firebase_service.dart';
 import '../../../data/models/order_model.dart';
-import '../../../data/repositories/order_repository.dart';
 
 class OrdersController extends GetxController {
-  final _orderRepo = OrderRepository();
-
   final orders = <OrderModel>[].obs;
   final selectedOrder = Rxn<OrderModel>();
-  final isLoading = false.obs;
+  final isLoading = true.obs;
+
+  StreamSubscription? _subscription;
 
   @override
   void onInit() {
     super.onInit();
-    loadOrders();
+    _listenToOrders();
     final args = Get.arguments;
     if (args is OrderModel) selectedOrder.value = args;
   }
 
-  Future<void> loadOrders() async {
-    isLoading.value = true;
-    try {
-      final uid = FirebaseService.instance.currentUserId;
-      if (uid != null) {
-        orders.value = await _orderRepo.getUserOrders(uid);
-      }
-    } catch (_) {
-    } finally {
+  void _listenToOrders() {
+    final uid = FirebaseService.instance.currentUserId;
+    if (uid == null) {
       isLoading.value = false;
+      return;
     }
+
+    isLoading.value = true;
+    _subscription = FirebaseService.instance.firestore
+        .collection(AppConstants.colOrders)
+        .where('userId', isEqualTo: uid)
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .listen(
+          (snapshot) {
+            orders.value = snapshot.docs
+                .map((doc) => OrderModel.fromMap(
+                      doc.data() as Map<String, dynamic>,
+                      doc.id,
+                    ))
+                .toList();
+            isLoading.value = false;
+          },
+          onError: (_) => isLoading.value = false,
+        );
   }
 
-  void selectOrder(OrderModel order) {
-    selectedOrder.value = order;
+  void selectOrder(OrderModel order) => selectedOrder.value = order;
+
+  @override
+  Future<void> refresh() async {
+    // Stream auto-refreshes; just re-subscribe if needed
+    _subscription?.cancel();
+    _listenToOrders();
   }
 
   @override
-  Future<void> refresh() => loadOrders();
+  void onClose() {
+    _subscription?.cancel();
+    super.onClose();
+  }
 }

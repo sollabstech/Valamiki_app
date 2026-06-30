@@ -9,32 +9,34 @@ class ProductRepository {
   CollectionReference<Map<String, dynamic>> get _col =>
       _firebase.firestore.collection(AppConstants.colProducts);
 
-  Future<List<ProductModel>> getFeaturedProducts({int limit = 10}) async {
-    final snap = await _col
+  Stream<List<ProductModel>> watchFeaturedProducts({int limit = 10}) {
+    return _col
         .where('isFeatured', isEqualTo: true)
         .where('isAvailable', isEqualTo: true)
         .limit(limit)
-        .get();
-    return snap.docs.map((d) => ProductModel.fromMap(d.data(), d.id)).toList();
+        .snapshots()
+        .map((snap) =>
+            snap.docs.map((d) => ProductModel.fromMap(d.data(), d.id)).toList());
   }
 
-  Future<List<ProductModel>> getPopularProducts({int limit = 10}) async {
-    final snap = await _col
+  Stream<List<ProductModel>> watchPopularProducts({int limit = 10}) {
+    return _col
         .where('isPopular', isEqualTo: true)
         .where('isAvailable', isEqualTo: true)
-        .orderBy('rating', descending: true)
         .limit(limit)
-        .get();
-    return snap.docs.map((d) => ProductModel.fromMap(d.data(), d.id)).toList();
+        .snapshots()
+        .map((snap) =>
+            snap.docs.map((d) => ProductModel.fromMap(d.data(), d.id)).toList());
   }
 
-  Future<List<ProductModel>> getFlashDeals({int limit = 6}) async {
-    final snap = await _col
+  Stream<List<ProductModel>> watchFlashDeals({int limit = 6}) {
+    return _col
         .where('isFlashDeal', isEqualTo: true)
         .where('isAvailable', isEqualTo: true)
         .limit(limit)
-        .get();
-    return snap.docs.map((d) => ProductModel.fromMap(d.data(), d.id)).toList();
+        .snapshots()
+        .map((snap) =>
+            snap.docs.map((d) => ProductModel.fromMap(d.data(), d.id)).toList());
   }
 
   Future<List<ProductModel>> getProductsByCategory(
@@ -42,26 +44,24 @@ class ProductRepository {
     int limit = 20,
     DocumentSnapshot? lastDoc,
   }) async {
-    var query = _col
+    var q = _col
         .where('categoryId', isEqualTo: categoryId)
         .where('isAvailable', isEqualTo: true)
-        .orderBy('createdAt', descending: true)
         .limit(limit);
 
-    if (lastDoc != null) query = query.startAfterDocument(lastDoc);
+    if (lastDoc != null) q = q.startAfterDocument(lastDoc);
 
-    final snap = await query.get();
+    final snap = await q.get();
     return snap.docs.map((d) => ProductModel.fromMap(d.data(), d.id)).toList();
   }
 
   Future<ProductModel?> getProductById(String productId) async {
-    final doc = await _col.doc(productId).get();
-    if (!doc.exists) return null;
-    return ProductModel.fromMap(doc.data()!, doc.id);
+    final d = await _col.doc(productId).get();
+    if (!d.exists) return null;
+    return ProductModel.fromMap(d.data()!, d.id);
   }
 
   Future<List<ProductModel>> searchProducts(String query) async {
-    // Basic search - for production use Algolia or Typesense
     final snap = await _col
         .where('isAvailable', isEqualTo: true)
         .orderBy('name')

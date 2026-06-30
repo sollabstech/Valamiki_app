@@ -61,11 +61,11 @@ class SplashView extends GetView<SplashController> {
                 children: [
                   // Logo container
                   Container(
-                    width: 110,
-                    height: 110,
+                    width: 130,
+                    height: 130,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(28),
+                      borderRadius: BorderRadius.circular(32),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.25),
@@ -74,16 +74,10 @@ class SplashView extends GetView<SplashController> {
                         ),
                       ],
                     ),
-                    child: const Center(
-                      child: Text(
-                        'V',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 52,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.primary,
-                        ),
-                      ),
+                    padding: const EdgeInsets.all(16),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      fit: BoxFit.contain,
                     ),
                   )
                       .animate()

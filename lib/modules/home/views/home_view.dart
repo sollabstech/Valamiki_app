@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../controllers/home_controller.dart';
 import '../../cart/controllers/cart_controller.dart';
 import '../../categories/views/categories_view.dart';
@@ -141,19 +142,12 @@ class _HomeTab extends StatelessWidget {
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          // App bar
           SliverToBoxAdapter(child: _buildHeader()),
-          // Search bar
           SliverToBoxAdapter(child: _buildSearchBar()),
-          // Banner slider
           SliverToBoxAdapter(child: _buildBannerSlider()),
-          // Categories
           SliverToBoxAdapter(child: _buildCategoriesSection()),
-          // Flash deals
           SliverToBoxAdapter(child: _buildFlashDeals()),
-          // Featured products
           SliverToBoxAdapter(child: _buildFeaturedSection()),
-          // Popular products
           SliverToBoxAdapter(child: _buildPopularSection()),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
@@ -178,6 +172,25 @@ class _HomeTab extends StatelessWidget {
       ),
       child: Row(
         children: [
+          // Brand logo
+          Container(
+            width: 40,
+            height: 40,
+            margin: const EdgeInsets.only(right: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.15),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(6),
+            child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
+          ),
           Expanded(
             child: Obx(() => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +229,6 @@ class _HomeTab extends StatelessWidget {
                   ],
                 )),
           ),
-          // Cart icon
           Obx(() {
             final cart = Get.find<CartController>();
             return GestureDetector(
@@ -321,128 +333,7 @@ class _HomeTab extends StatelessWidget {
   }
 
   Widget _buildBannerSlider() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: CarouselSlider.builder(
-        itemCount: controller.dummyBanners.length,
-        options: CarouselOptions(
-          height: 160,
-          autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 3),
-          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-          autoPlayCurve: Curves.easeInOut,
-          enlargeCenterPage: true,
-          enlargeFactor: 0.1,
-          viewportFraction: 0.88,
-        ),
-        itemBuilder: (context, index, realIndex) {
-          final banner = controller.dummyBanners[index];
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(banner.color1), Color(banner.color2)],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Color(banner.color1).withValues(alpha: 0.4),
-                  blurRadius: 16,
-                  offset: const Offset(0, 6),
-                ),
-              ],
-            ),
-            child: Stack(
-              children: [
-                // Background pattern circles
-                Positioned(
-                  right: -20,
-                  top: -20,
-                  child: Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white.withValues(alpha: 0.1),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 20,
-                  bottom: -30,
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white.withValues(alpha: 0.08),
-                    ),
-                  ),
-                ),
-                // Content
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              banner.subtitle,
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 12,
-                                color: Colors.white.withValues(alpha: 0.85),
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              banner.title,
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                'Shop Now',
-                                style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(banner.color1),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        banner.emoji,
-                        style: const TextStyle(fontSize: 60),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    ).animate().fadeIn(delay: 200.ms);
+    return _BannerCarousel(banners: controller.dummyBanners);
   }
 
   Widget _buildCategoriesSection() {
@@ -585,6 +476,181 @@ class _HomeTab extends StatelessWidget {
   }
 }
 
+// ── Auto-scrolling banner carousel ───────────────────────────────────────────
+
+class _BannerCarousel extends StatefulWidget {
+  final List<dynamic> banners;
+  const _BannerCarousel({required this.banners});
+
+  @override
+  State<_BannerCarousel> createState() => _BannerCarouselState();
+}
+
+class _BannerCarouselState extends State<_BannerCarousel> {
+  late final PageController _pageController;
+  late final Timer _timer;
+  int _current = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(viewportFraction: 0.88);
+    _timer = Timer.periodic(const Duration(seconds: 3), (_) {
+      if (!mounted || widget.banners.isEmpty) return;
+      final next = (_current + 1) % widget.banners.length;
+      _pageController.animateToPage(
+        next,
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.banners.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 160,
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: widget.banners.length,
+              onPageChanged: (i) => setState(() => _current = i),
+              itemBuilder: (context, index) {
+                final banner = widget.banners[index];
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 6),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [Color(banner.color1), Color(banner.color2)],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(banner.color1).withValues(alpha: 0.4),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        right: -20,
+                        top: -20,
+                        child: Container(
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withValues(alpha: 0.1),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 20,
+                        bottom: -30,
+                        child: Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withValues(alpha: 0.08),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    banner.subtitle,
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 12,
+                                      color: Colors.white.withValues(alpha: 0.85),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    banner.title,
+                                    style: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Text(
+                                      'Shop Now',
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(banner.color1),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              banner.emoji,
+                              style: const TextStyle(fontSize: 60),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 12),
+          AnimatedSmoothIndicator(
+            activeIndex: _current,
+            count: widget.banners.length,
+            effect: ExpandingDotsEffect(
+              dotHeight: 6,
+              dotWidth: 6,
+              activeDotColor: AppColors.primary,
+              dotColor: AppColors.primary.withValues(alpha: 0.25),
+            ),
+          ),
+        ],
+      ),
+    ).animate().fadeIn(delay: 200.ms);
+  }
+}
+
+// ── Shared section header ────────────────────────────────────────────────────
+
 class _SectionHeader extends StatelessWidget {
   final String title;
   final String? subtitle;
@@ -653,6 +719,8 @@ class _SectionHeader extends StatelessWidget {
     );
   }
 }
+
+// ── Category chip ────────────────────────────────────────────────────────────
 
 class _CategoryChip extends StatelessWidget {
   final CategoryModel category;

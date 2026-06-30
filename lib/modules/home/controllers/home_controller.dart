@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:get/get.dart';
 import '../../../data/models/banner_model.dart';
 import '../../../data/models/category_model.dart';
@@ -20,7 +21,10 @@ class HomeController extends GetxController {
   final popularProducts = <ProductModel>[].obs;
   final flashDeals = <ProductModel>[].obs;
 
-  // Dummy banners for UI
+  StreamSubscription? _featuredSub;
+  StreamSubscription? _popularSub;
+  StreamSubscription? _flashSub;
+
   final dummyBanners = [
     _DummyBanner(
       title: 'Fresh Groceries',
@@ -48,62 +52,97 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadInitialData();
+    _loadUser();
+    categories.value = CategoryModel.defaultCategories;
+    _subscribeToProducts();
   }
 
-  Future<void> loadInitialData() async {
-    isLoading.value = true;
+  Future<void> _loadUser() async {
     try {
-      categories.value = CategoryModel.defaultCategories;
-
-      // Load user data
-      final currentUser = await _authRepo.getCurrentUser();
-      user.value = currentUser;
-
-      // Try loading from Firebase, fallback to dummy data
-      try {
-        final featured = await _productRepo.getFeaturedProducts();
-        final popular = await _productRepo.getPopularProducts();
-        final flash = await _productRepo.getFlashDeals();
-
-        if (featured.isEmpty) {
-          featuredProducts.value = ProductModel.dummyProducts.where((p) => p.isFeatured).toList();
-        } else {
-          featuredProducts.value = featured;
-        }
-
-        if (popular.isEmpty) {
-          popularProducts.value = ProductModel.dummyProducts.where((p) => p.isPopular).toList();
-        } else {
-          popularProducts.value = popular;
-        }
-
-        if (flash.isEmpty) {
-          flashDeals.value = ProductModel.dummyProducts.where((p) => p.isFlashDeal).toList();
-        } else {
-          flashDeals.value = flash;
-        }
-      } catch (_) {
-        _loadDummyData();
-      }
-    } catch (_) {
-      _loadDummyData();
-    } finally {
-      isLoading.value = false;
-    }
+      user.value = await _authRepo.getCurrentUser();
+    } catch (_) {}
   }
 
-  void _loadDummyData() {
-    final dummy = ProductModel.dummyProducts;
-    featuredProducts.value = dummy.where((p) => p.isFeatured).toList();
-    popularProducts.value = dummy.where((p) => p.isPopular).toList();
-    flashDeals.value = dummy.where((p) => p.isFlashDeal).toList();
+  void _subscribeToProducts() {
+    isLoading.value = true;
+    _pendingStreams = 3;
+
+    _featuredSub = _productRepo.watchFeaturedProducts().listen(
+      (products) {
+        if (products.isEmpty) {
+          featuredProducts.value =
+              ProductModel.dummyProducts.where((p) => p.isFeatured).toList();
+        } else {
+          featuredProducts.value = products;
+        }
+        _checkDoneLoading();
+      },
+      onError: (_) {
+        featuredProducts.value =
+            ProductModel.dummyProducts.where((p) => p.isFeatured).toList();
+        _checkDoneLoading();
+      },
+    );
+
+    _popularSub = _productRepo.watchPopularProducts().listen(
+      (products) {
+        if (products.isEmpty) {
+          popularProducts.value =
+              ProductModel.dummyProducts.where((p) => p.isPopular).toList();
+        } else {
+          popularProducts.value = products;
+        }
+        _checkDoneLoading();
+      },
+      onError: (_) {
+        popularProducts.value =
+            ProductModel.dummyProducts.where((p) => p.isPopular).toList();
+        _checkDoneLoading();
+      },
+    );
+
+    _flashSub = _productRepo.watchFlashDeals().listen(
+      (products) {
+        if (products.isEmpty) {
+          flashDeals.value =
+              ProductModel.dummyProducts.where((p) => p.isFlashDeal).toList();
+        } else {
+          flashDeals.value = products;
+        }
+        _checkDoneLoading();
+      },
+      onError: (_) {
+        flashDeals.value =
+            ProductModel.dummyProducts.where((p) => p.isFlashDeal).toList();
+        _checkDoneLoading();
+      },
+    );
+  }
+
+  int _pendingStreams = 3;
+
+  void _checkDoneLoading() {
+    _pendingStreams--;
+    if (_pendingStreams <= 0) isLoading.value = false;
   }
 
   void changeTab(int index) => currentIndex.value = index;
 
   @override
-  Future<void> refresh() => loadInitialData();
+  Future<void> refresh() async {
+    _featuredSub?.cancel();
+    _popularSub?.cancel();
+    _flashSub?.cancel();
+    _subscribeToProducts();
+  }
+
+  @override
+  void onClose() {
+    _featuredSub?.cancel();
+    _popularSub?.cancel();
+    _flashSub?.cancel();
+    super.onClose();
+  }
 
   String get greeting {
     final hour = DateTime.now().hour;

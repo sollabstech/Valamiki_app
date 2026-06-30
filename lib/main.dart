@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,6 +33,12 @@ void main() async {
   // Initialize Firebase
   try {
     await Firebase.initializeApp();
+    // Disable Play Integrity / reCAPTCHA for debug builds so test
+    // phone numbers work on sideloaded APKs (no Play Store needed).
+    if (kDebugMode) {
+      await FirebaseAuth.instance
+          .setSettings(appVerificationDisabledForTesting: true);
+    }
     Get.put<FirebaseService>(FirebaseService());
   } catch (_) {
     // Firebase not yet configured — app runs with local/dummy data
